@@ -19,9 +19,12 @@ ReactDOM.render(
        <li><NavLink activeStyle={{color:'red'}}  to="/user">用户管理</NavLink></li>
        <li><NavLink activeStyle={{color:'red'}}  to="/profile">个人中心</NavLink></li>
      </ul>
-     <Switch>
-       <Route path="/" component={Home} exact/>
-       <Route path="/user" component={User}/>
+    <Switch>
+      {/*Switch的功能是 一旦有一个匹配了，后面的就不再匹配了 */}
+      <Route path="/" component={Home} exact />
+      <Route path="/" component={Home} exact/>
+      <Route path="/user" component={User} />
+      <Route path="/user" component={User}/>
        <Protected path="/profile" component={Profile}/>
        <Route path="/login" component={Login}/>
        <Redirect to="/"/>

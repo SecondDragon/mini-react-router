@@ -1,11 +1,6 @@
 /**
  * 工厂方法，用来返回一个历史对象
  */
-/**
- * 我们之所以说Hash模式的兼容性更强，是因为Hash模式并不依赖于某一个特定的API。
- * history依赖于history API提供的历史堆栈，
- * 而hash模式则自己实现了一个历史条目栈
- *  */  
 function createHashHistory(props) {
     let stack = [];//模拟一个历史条目栈，这里放的都是每一次的location
     let index = -1;//模拟一个当前索引
@@ -41,10 +36,7 @@ function createHashHistory(props) {
         }
         listeners.forEach(listener=>listener(history.location));
      }
-    window.addEventListener('hashchange', listener);
-    // 这里正是hashchange引起listener函数的调用,进而导致history的改变。
-    // 在执行回调时将新的history传了过去,引起Router组件的setState修改history状态，进而导致从根路由开始的
-    // 整体的重新渲染。
+    window.addEventListener('hashchange',listener);
     //to={pathname:'',state:{}}
     function push(to,nextState){
         action = 'PUSH';

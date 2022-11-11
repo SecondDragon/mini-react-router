@@ -11,16 +11,12 @@
 <body>
     <div id="root"></div>
     <script>
-
-        window.addEventListener('popstate', (event) => {
-            //push入栈 pop类似于出栈
-            //  Push不能触发popstate
+        let historyObj = window.history;
+        window.addEventListener('popstate', (event) => {//push入栈 pop类似于出栈
             console.log(event.type, event.state);
             root.innerHTML = window.location.pathname;//真正浏览器路径
         });
-
-        let historyObj = window.history;
-        let historyLength = historyObj.length//刚刚启动时历史栈里面的条目数量。
+        //当我们调用pushState方法的时候会触发这函数执行
         window.onpushstate = function (event) {
             console.log(event, event.type, event.detail);
             root.innerHTML = window.location.pathname;
@@ -37,40 +33,31 @@
                 }
             })(historyObj);
 
-
+        let historyLength = historyObj.length;//启动的时候条目的数量
         setTimeout(() => {
-            historyObj.pushState({ page: 1 }, null, '/page1')
+            historyObj.pushState({ page: 1 }, null, '/page1');
             console.log('after page1', historyObj.length - historyLength);
         }, 1000);
         setTimeout(() => {
-            historyObj.pushState({ page: 2 }, null, '/page2')
+            historyObj.pushState({ page: 2 }, null, '/page2');
             console.log('after page2', historyObj.length - historyLength);
-
         }, 2000);
         setTimeout(() => {
-            historyObj.pushState({ page: 3 }, null, '/page3')
+            historyObj.pushState({ page: 3 }, null, '/page3');
             console.log('after page3', historyObj.length - historyLength);
         }, 3000);
         setTimeout(() => {
-            historyObj.back()//回退一步。
+            historyObj.back();
             console.log('after page4', historyObj.length - historyLength);
         }, 4000);
-         setTimeout(() => {
-                historyObj.back()//回退一步。
-                console.log('after page42', historyObj.length - historyLength);
-            }, 4000);
         setTimeout(() => {
-            // 
-             historyObj.pushState({ page: 4 }, null, '/page4')
+            historyObj.pushState({ page: 4 }, null, '/page4');
             console.log('after page5', historyObj.length - historyLength);
         }, 5000);
-
         setTimeout(() => {
             historyObj.go(1)
             console.log('after page6', historyObj.length - historyLength);
         }, 6000);
-
-
     </script>
 </body>
 

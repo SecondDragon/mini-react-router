@@ -1,46 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {HashRouter as Router,Route,Link} from 'react-router-dom';
-function lazy(load){
-  return class extends React.Component{
-    state = {trueComponent:null}
-    componentDidMount(){
-      load().then(result=>{
-        this.setState({trueComponent:result.default||result});
-      });
-    }
-    render(){
-      let {trueComponent:LoadComponent} = this.state;
-      return LoadComponent?<LoadComponent {...this.props}/>:null;
-    }
-  }
-}
-let LazyHome = lazy(()=>import(/* webpackChunkName: "Home" */'./components/Home'));
-let LazyProfile = lazy(()=>import(/* webpackChunkName: "Profile" */'./components/Profile'));
-function SuspenseHome(){
-  return (
-    <React.Suspense fallback={<div>loading</div>}>
-      <LazyHome/>
-    </React.Suspense>
-  )
-}
-function SuspenseProfile(){
-  return (
-    <React.Suspense fallback={<div>loading</div>}>
-      <LazyProfile/>
-    </React.Suspense>
-  )
-}
-
+import {HashRouter as Router,Route,Switch,Redirect,NavLink} from './react-router-dom';
+import Home from './components/Home';
+import User from './components/User';
+import Profile from './components/Profile';
+import Protected from './components/Protected';
+import Login from './components/Login';
+import NavHeader from './components/NavHeader';
 ReactDOM.render(
-  <Router>
-    <div>
-      <ul>
-        <li><Link to="/">首页</Link></li>
-        <li><Link to="/profile">个人中心</Link></li>
-      </ul>
-      <Route exact path="/" component={SuspenseHome}/>
-      <Route path="/profile" component={SuspenseProfile}/>
-    </div>
-  </Router>,document.getElementById('root')
+  <Router getUserConfirmation={()=>{
+    console.log('这是我自己的confirm方法');
+    return window.confirm;
+  }}>
+     <NavHeader title="首页"/>
+     <ul>
+       <li><NavLink className="strong" style={{textDecoration:'line-through'}} 
+       activeStyle={{color:'red'}} activeClassName="active" to="/" exact>首页</NavLink></li>
+       <li><NavLink activeStyle={{color:'red'}}  to="/user">用户管理</NavLink></li>
+       <li><NavLink activeStyle={{color:'red'}}  to="/profile">个人中心</NavLink></li>
+     </ul>
+     <Switch>
+       <Route path="/" component={Home}exact/>
+       <Route path="/user" component={User}/>
+       <Protected path="/profile" component={Profile}/>
+       <Route path="/login" component={Login}/>
+       <Redirect to="/"/>
+     </Switch>
+  </Router>,
+  document.getElementById('root')
 );

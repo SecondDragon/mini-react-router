@@ -4,8 +4,7 @@ import {Prompt} from '../react-router-dom';
 class UserAdd extends React.Component{
     usernameRef = React.createRef();
     state = {isBlocking:false}//定义一个状态，是否跳转的状态
-    handleSubmit = (event) => {
-        debugger
+    handleSubmit = (event)=>{
         event.preventDefault();
         this.setState({isBlocking:false},()=>{
             let username = this.usernameRef.current.value;

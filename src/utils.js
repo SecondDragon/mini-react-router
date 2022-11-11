@@ -2,7 +2,7 @@ export const UserAPI = {
     add(user){
         let users = UserAPI.list();
         users.push(user);
-        localStorage.setItem('users',JSON.stringify(users));
+        // localStorage.setItem('users',JSON.stringify(users));
     },
     list(){
         let usersString = localStorage.getItem('users');

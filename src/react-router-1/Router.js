@@ -7,9 +7,8 @@ class Router  extends React.Component{
   constructor(props) {
       super(props);
       this.state = {
-        //数据来源是react-router-dom的 HashRouter或者BrowserRouter组件传过来的history属性。
-        location: props.history.location,
-      };
+          location:props.history.location
+      }
       //监听路径变化，当路径发生变化 后执行回调，并传入最新的路径
       this.unlisten = props.history.listen((location)=>{
           this.setState({location});//状态改变会引起组件刷新

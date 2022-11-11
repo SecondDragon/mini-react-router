@@ -25,12 +25,9 @@ function createBrowserHistory(props){
     setState({action:'POP',location:{state:event.state,pathname:window.location.pathname}});
   });
   function setState(newState){
-    Object.assign(history, newState);
+    Object.assign(history,newState);
     history.length = globalHistory.length;
-    // 在执行回调时将新的history传了过去,引起Router组件的setState修改history状态，
-    // 进而导致从根路由开始的
-    // 整体的重新渲染。
-    listeners.forEach((listener) => listener(history.location));
+    listeners.forEach(listener=>listener(history.location));
   }
   /**
    * push方法

@@ -3,11 +3,11 @@ import RouterContext from './RouterContext';
 import matchPath from './matchPath';
 class Route  extends React.Component{
   static contextType = RouterContext;
-  render() {
+  render(){
       let {history,location} = this.context;//static contextType=>this.context
       let {component:RouteComponent,computedMatch,render,children} = this.props;
       let match = computedMatch?computedMatch:matchPath(location.pathname,this.props);
-      // let match = location.pathname === path;//如果两个一样匹配上了 这种写法是精准匹配，没有用正则。
+      //let match = location.pathname === path;//如果两个一样匹配上了
       let renderElement=null;
       let routeProps = {history,location};
       if(match){
